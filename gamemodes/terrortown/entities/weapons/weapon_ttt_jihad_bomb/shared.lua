@@ -5,7 +5,7 @@ SWEP.Contact = "http://steamcommunity.com/profiles/76561198032479768"
 local buyable = CreateConVar("ttt_jihad_buyable", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Jihad Bomb be buyable for Traitors?", 0, 1)
 local isLoadout = CreateConVar("ttt_jihad_loadout", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Jihad Bomb be in the loadout for Traitors?", 0, 1)
 
-local sound = CreateConVar("ttt_jihad_sound", "weapons/jihad_bomb/ttt_never_surrender_210.wav", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE}, "The sound when starting the Jihab Bomb.")
+local sound = CreateConVar("ttt_jihad_sound", "weapons/jihad_bomb/ttt_never_surrender.wav", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE}, "The sound when starting the Jihab Bomb.")
 
 if SERVER then
 	AddCSLuaFile()
@@ -92,7 +92,7 @@ SWEP.NoSights = true
 
 -- precache sounds and models
 function SWEP:Precache()
-	util.PrecacheSound("weapons/jihad_bomb/ttt_never_surrender_210.wav")
+	util.PrecacheSound("weapons/jihad_bomb/ttt_never_surrender.wav")
 	util.PrecacheSound("weapons/jihad_bomb/big_explosion.wav")
 
 	util.PrecacheModel("models/humans/charple01.mdl")
@@ -163,6 +163,8 @@ end
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self.AllowDrop = false
+	
+	self:EmitSound("weapons/jihad_bomb/ttt_never_surrender.wav", 400, math.random(100, 125))
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin(self:GetPos())
