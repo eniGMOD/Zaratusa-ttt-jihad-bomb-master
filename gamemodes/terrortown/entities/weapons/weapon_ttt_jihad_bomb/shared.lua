@@ -5,7 +5,7 @@ SWEP.Contact = "http://steamcommunity.com/profiles/76561198032479768"
 local buyable = CreateConVar("ttt_jihad_buyable", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Jihad Bomb be buyable for Traitors?", 0, 1)
 local isLoadout = CreateConVar("ttt_jihad_loadout", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Jihad Bomb be in the loadout for Traitors?", 0, 1)
 
-local sound = CreateConVar("ttt_jihad_sound", "weapons/jihad_bomb/ttt_never_surrender.wav", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE}, "The sound when starting the Jihab Bomb.")
+local sound = CreateConVar("ttt_jihad_sound", "sound/weapons/jihad_bomb/ttt_never_surrender.wav", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE}, "The sound when starting the Jihab Bomb.")
 
 if SERVER then
 	AddCSLuaFile()
@@ -51,7 +51,7 @@ SWEP.HoldType = "slam"
 SWEP.UseHands = true
 SWEP.DrawAmmo = false
 SWEP.ViewModelFlip = false
-SWEP.ViewModelFOV = 54
+SWEP.ViewModelFOV = 74
 SWEP.ViewModel = Model("models/weapons/zaratusa/jihad_bomb/v_jb.mdl")
 SWEP.WorldModel = Model("models/weapons/zaratusa/jihad_bomb/w_jb.mdl")
 
@@ -92,8 +92,8 @@ SWEP.NoSights = true
 
 -- precache sounds and models
 function SWEP:Precache()
-	util.PrecacheSound("weapons/jihad_bomb/ttt_never_surrender.wav")
-	util.PrecacheSound("weapons/jihad_bomb/big_explosion.wav")
+	util.PrecacheSound("sound/weapons/jihad_bomb/ttt_never_surrender.wav")
+	util.PrecacheSound("sound/weapons/jihad_bomb/big_explosion.wav")
 
 	util.PrecacheModel("models/humans/charple01.mdl")
 	util.PrecacheModel("models/humans/charple02.mdl")
@@ -164,7 +164,8 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self.AllowDrop = false
 	
-	self:EmitSound("weapons/jihad_bomb/ttt_never_surrender.wav", 400, math.random(100, 125))
+	--Entity:EmitSound( string soundName, number soundLevel = 75, number pitchPercent = 100, number volume = 1, number channel = CHAN_AUTO, CHAN_WEAPON for weapons, number soundFlags = 0, number dsp = 0 )
+	self:GetOwner():EmitSound(sound:"sound/weapons/jihad_bomb/ttt_never_surrender", 400, math.random(100, 125))
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin(self:GetPos())
@@ -194,7 +195,7 @@ function SWEP:Explode()
 	local r_inner = 550
 	local r_outer = r_inner * 1.15
 
-	self:EmitSound("weapons/jihad_bomb/big_explosion.wav", 400, math.random(100, 125))
+	self:EmitSound("sound/weapons/jihad_bomb/big_explosion.wav", 400, math.random(100, 125))
 
 	-- change body to a random charred body
 	local model = "models/humans/charple0" .. math.random(1,4) .. ".mdl"
