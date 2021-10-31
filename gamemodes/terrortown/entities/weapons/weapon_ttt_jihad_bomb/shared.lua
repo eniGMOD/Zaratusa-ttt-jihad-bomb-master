@@ -165,7 +165,7 @@ function SWEP:PrimaryAttack()
 	self.AllowDrop = false
 	
 	--Entity:EmitSound( string soundName, number soundLevel = 75, number pitchPercent = 100, number volume = 1, number channel = CHAN_AUTO, CHAN_WEAPON for weapons, number soundFlags = 0, number dsp = 0 )
-	self:GetOwner():EmitSound(sound:"sound/weapons/jihad_bomb/ttt_never_surrender", 400, math.random(100, 125))
+	self:GetOwner():EmitSound("sound/weapons/jihad_bomb/ttt_never_surrender", 400, math.random(100, 125))
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin(self:GetPos())
